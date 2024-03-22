@@ -1,0 +1,56 @@
+name: ddev-hxgui-pro
+
+project_files:
+  - xhgui/collector/xhprof_prepend.php
+  - xhgui/config/app.php
+  - xhgui/config/nginx.conf
+  - config.xhgui-pro.yaml
+  - docker-compose.xhgui-pro.yaml
+
+pre_install-actions:
+  - |
+    #ddev-description: Cleanup the auto-prepend-file
+    rm -f xhprof/xhprof_prepend.php
+
+post_install_actions:
+  - |
+    #ddev-description: Create the auto-prepend-file
+    echo "<?php" > xhprof/xhprof_prepend.php && tail -n +3 ./xhgui/collector/xhprof_prepend.php >> xhprof/xhprof_prepend.php
+  - |
+    #ddev-description: Create traefik config for xhgui
+    cat <<EOF >traefik/config/${DDEV_SITENAME}-xhgui-pro.yaml
+    #ddev-generated
+    http:
+      middlewares:
+        strip-hxgui-${DDEV_SITENAME}-prefix:
+          stripPrefix:
+            prefixes:
+              - "/xhgui"
+            forceSlash: false
+      routers:
+        ${DDEV_SITENAME}-xhgui-ui-http:
+          rule: "Host(\`${DDEV_SITENAME}.${DDEV_TLD}\`) && PathPrefix(\`/xhgui\`)"
+          service: "${DDEV_SITENAME}-xhgui-ui"
+          tls: false
+          entryPoints:
+            - "http-80"
+          middlewares:
+            - "strip-hxgui-${DDEV_SITENAME}-prefix@file"
+        ${DDEV_SITENAME}-xhgui-ui-https:
+          rule: "Host(\`${DDEV_SITENAME}.${DDEV_TLD}\`) && PathPrefix(\`/xhgui\`)"
+          service: "${DDEV_SITENAME}-xhgui-ui"
+          tls: true
+          entryPoints:
+            - "http-443"
+          middlewares:
+            - "strip-hxgui-${DDEV_SITENAME}-prefix@file"
+      services:
+        ${DDEV_SITENAME}-xhgui-ui:
+          loadBalancer:
+            servers:
+              - url: "http://ddev-${DDEV_SITENAME}-xhgui-ui:80"
+    tls:
+      certificates:
+      - certFile: /mnt/ddev-global-cache/traefik/certs/${DDEV_SITENAME}.crt
+        keyFile: /mnt/ddev-global-cache/traefik/certs/${DDEV_SITENAME}.key
+    EOF
