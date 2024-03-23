@@ -2,7 +2,7 @@
 
 # ddev-xhgui-pro - use XHGui with DDEV 
 
-![GitHub release (with filter)](https://img.shields.io/github/v/release/oblakdev/ddev-xhgui-pro)
+![GitHub release (with filter)](https://img.shields.io/github/v/release/oblakstudio/ddev-xhgui-pro)
 [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 ![project is maintained](https://img.shields.io/maintenance/yes/2024.svg)
 

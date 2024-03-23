@@ -1,0 +1,31 @@
+{
+  "branches": [
+    "master",
+    {
+      "name": "alpha",
+      "prerelease": true
+    }
+  ],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "zip -qr /tmp/release.zip *.yaml hxgui"
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "assets": [
+          {
+            "path": "/tmp/release.zip",
+            "name": "ddev-xhgui-pro-${nextRelease.version}.zip",
+            "label": "DDEV XHGui Pro Addon v${nextRelease.version}"
+          }
+        ]
+      }
+    ]
+  ]
+}
