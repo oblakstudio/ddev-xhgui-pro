@@ -24,8 +24,8 @@ services:
     image: xhgui/xhgui:latest
     volumes:
       - "hxgui-ui-nginx:/run/nginx"
-      - "./xhgui-ui/config/nginx.conf:/etc/nginx/http.d/default.conf:ro"
-      - "./xhgui-ui/config/app.php:/var/www/xhgui/config/config.php"
+      - "./xhgui/config/nginx.conf:/etc/nginx/http.d/default.conf:ro"
+      - "./xhgui/config/app.php:/var/www/xhgui/config/config.php"
     networks:
       - default
       - ddev_default
