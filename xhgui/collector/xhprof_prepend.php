@@ -7,7 +7,7 @@ if (!extension_loaded('xhprof')) {
     return;
 }
 
-require_once '/var/www/html/profiler/vendor/autoload.php';
+require_once '/var/www/html/profiler/autoload.php';
 
 $config = [
     'save.handler'        => Profiler::SAVER_STACK,
@@ -22,9 +22,9 @@ $config = [
         'filename' => '/tmp/xhgui.data.jsonl',
     ],
     'save.handler.upload' => [
-        'url'     => 'http://hxgui-ui/run/import',
+        'url'     => 'http://xhgui-ui/run/import',
         'timeout' => 3,
-        'token'   => getenv('XHGUI_UPLOAD_TOKEN', 'token'),
+        'token'   => getenv('XHGUI_UPLOAD_TOKEN') ?: 'token',
     ],
     'profiler.enable' => function () {
         return true;

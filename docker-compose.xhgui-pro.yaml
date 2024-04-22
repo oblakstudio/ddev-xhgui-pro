@@ -19,7 +19,7 @@ volumes:
       com.ddev.site-name: ${DDEV_SITENAME}
 
 services:
-  hxgui-ui:
+  xhgui-ui:
     container_name: ddev-${DDEV_SITENAME}-xhgui-ui
     image: xhgui/xhgui:latest
     volumes:
@@ -35,10 +35,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "2"
+          cpus: "2.5"
           memory: "1024M"
         reservations:
-          cpus: "1"
+          cpus: "1.5"
           memory: "512M"
     restart: no
     depends_on:
@@ -66,10 +66,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "2"
+          cpus: "2.5"
           memory: "1024M"
         reservations:
-          cpus: "1"
+          cpus: "1.5"
           memory: "512M"
     restart: no
     healthcheck:
