@@ -7,12 +7,13 @@ project_files:
   - config.xhgui-pro.yaml
   - docker-compose.xhgui-pro.yaml
 
-pre_install-actions:
+post_install_actions:
   - |
     #ddev-description: Cleanup the auto-prepend-file
     rm -f xhprof/xhprof_prepend.php
-
-post_install_actions:
+  - |
+    #ddev-description: Cleanup the profiler package
+    rm -rf $DDEV_APPROOT/profiler
   - |
     #ddev-description: Create the auto-prepend-file
     echo "<?php" > xhprof/xhprof_prepend.php && tail -n +3 ./xhgui/collector/xhprof_prepend.php >> xhprof/xhprof_prepend.php
