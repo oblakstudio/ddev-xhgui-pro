@@ -13,8 +13,21 @@ This repository provides the XHGui service to [DDEV](https://ddev.readthedocs.io
 
 ## Installation
 
+For DDEV v1.23.5 or above run
+
+```bash
+ddev add-on get oblakdev/ddev-xhgui-pro
+```
+
+For earlier versions of DDEV run
+
 ```bash
 ddev get oblakdev/ddev-xhgui-pro
+```
+
+Then restart your project
+
+```bash
 ddev restart
 ```
 
